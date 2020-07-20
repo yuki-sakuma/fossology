@@ -165,6 +165,7 @@ src/reportImport/agent/reportImport
 src/delagent/agent_tests/Unit/test_delagent
 src/delagent/agent_tests/Unit/testconf/
 /utils/fo_unicode_clean
+src/www/ui/css/bootstrap/
 
 # Add all the Ubuntu consol log file
 ubuntu-*

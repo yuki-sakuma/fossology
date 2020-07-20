@@ -5,7 +5,10 @@
    This file is offered as-is, without any warranty.
 #}
 {% if bannerMsg %}
-<div style="background-color:#ffbbbb">{{ bannerMsg }}</div>
+  <div class="alert alert-danger alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  {{ bannerMsg }}
+  </div>
 {% endif %}
 <table border="0" width="100%">
   <tr>

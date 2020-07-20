@@ -26,7 +26,8 @@
         "symfony/yaml" : "v3.4.26",
         "twig/twig" : "v1.38.4",
         "twig/extensions" : "v1.5.4",
-        "guzzlehttp/guzzle": "6.3.3"
+        "guzzlehttp/guzzle" : "6.3.3",
+        "twbs/bootstrap" : "4.0.0"
     },
     "require-dev" : {
         "doctrine/instantiator" : "1.0.5",
@@ -55,6 +56,12 @@
         "platform" : {
             "php" : "5.6"
         }
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "rm -rf www/ui/css/bootstrap",
+            "cp -R vendor/twbs/bootstrap/dist www/ui/css/bootstrap"
+        ]
     },
     "homepage" : "https://www.fossology.org/",
     "license" : [
