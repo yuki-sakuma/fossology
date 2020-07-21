@@ -159,14 +159,7 @@ class agent_nomos_once extends FO_Plugin
           "format",
           "item"
         ));
-        $menuText = "One-Shot License";
-        $menuPosition = 100;
-        $tooltipText = _("One-shot License, real-time license analysis");
-        menu_insert("View::[BREAK]", $menuPosition);
-        menu_insert("View::{$menuText}", $menuPosition + 1, $URI, $tooltipText);
-        menu_insert("View-Meta::[BREAK]", $menuPosition);
-        menu_insert("View-Meta::{$menuText}", $menuPosition + 1, $URI,
-          $tooltipText);
+        menu_insert("Main::Upload::One-shot License", $this->MenuOrder, $this->Name, $this->MenuTarget);
       }
     }
   }
