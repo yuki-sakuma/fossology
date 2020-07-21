@@ -307,6 +307,9 @@ class ClearingView extends FO_Plugin
       $groupId);
 
     $this->vars['message'] = _("Cleared").": $filesCleared/$filesOfInterest";
+    $percentage = ($filesCleared / $filesOfInterest) * 100;
+    $percentage = ($percentage > 11) ? $percentage : 11;
+    $this->vars['progressBar'] = "width:".$percentage."%";
 
     return $this->render("ui-clearing-view.html.twig");
   }

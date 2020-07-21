@@ -60,7 +60,7 @@
     "scripts": {
         "post-update-cmd": [
             "rm -rf www/ui/css/bootstrap",
-            "cp -R vendor/twbs/bootstrap/dist www/ui/css/bootstrap"
+            "cp -R vendor/twbs/bootstrap www/ui/css/bootstrap"
         ]
     },
     "homepage" : "https://www.fossology.org/",

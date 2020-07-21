@@ -192,7 +192,7 @@ class agent_copyright_once extends FO_Plugin {
       // Debugging changes to license analysis NOTE: this comment doesn't make sense.
       if ($_SESSION[Auth::USER_LEVEL] >= PLUGIN_DB_WRITE)
       {
-        menu_insert("Main::Upload::One-Shot Copyright/Email/URL", $this->MenuOrder, $this->Name, $this->MenuTarget);
+        menu_insert("Main::Upload::One-Shot Copyright/ Email/ URL Analysis", $this->MenuOrder, $this->Name, $this->MenuTarget);
       }
     }
   } // RegisterMenus()
