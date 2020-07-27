@@ -176,7 +176,7 @@ class AjaxBrowse extends DefaultPlugin
 
     $itemId = Isartifact($row['ufile_mode']) ? DirGetNonArtifact($row['uploadtree_pk']) : $row['uploadtree_pk'];
 
-    $nameColumn = "<b>$fileName</b>";
+    $nameColumn = "<strong style='margin-left:10px;font-size:11pt;'>$fileName</strong>";
     if (IsContainer($row['ufile_mode'])) {
       $nameColumn = "<a href='$uri&upload=$uploadId&folder=$folder&item=$itemId&show=$show'>$nameColumn</a>";
     }
@@ -193,7 +193,7 @@ class AjaxBrowse extends DefaultPlugin
 
     $modsUploadMulti = MenuHook::getAgentPluginNames('UploadMulti');
     if (!empty($modsUploadMulti)) {
-      $nameColumn = '<input type="checkbox" name="uploads[]" class="browse-upload-checkbox" value="'.$uploadId.'"/>'.$nameColumn;
+      $nameColumn = '<div class="form-group"><input type="checkbox" name="uploads[]" class="browse-upload-checkbox" style="width:1.10rem;height:1.10rem;" value="'.$uploadId.'"/>'.$nameColumn.'</div>';
     }
 
     $dateCol = Convert2BrowserTime(substr($row['upload_ts'], 0, 19));
@@ -249,7 +249,8 @@ class AjaxBrowse extends DefaultPlugin
 
   private function createSelect($id,$options,$select='',$action='')
   {
-    $html = "<select name=\"$id\" id=\"$id\" $action class=\"ui-render-select2\">";
+    $html = '<div class="form-group">';
+    $html .= "<select class='form-control-sm' name=\"$id\" id=\"$id\" $action class=\"ui-render-select2\">";
     foreach ($options as $key=>$disp) {
       $html .= '<option value="'.$key.'"';
       if ($key == $select) {
@@ -257,7 +258,7 @@ class AjaxBrowse extends DefaultPlugin
       }
       $html .= ">$disp</option>";
     }
-    $html .= '</select>';
+    $html .= '</select></div>';
     return $html;
   }
 

@@ -5,7 +5,7 @@
    This file is offered as-is, without any warranty.
 #}
 {% if bannerMsg %}
-  <div class="alert alert-danger alert-dismissible" style="padding:10px;">
+  <div class="alert alert-danger alert-dismissible" style="padding:5px;">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
   {{ bannerMsg }}
   </div>
@@ -43,7 +43,7 @@
               {%else%}
                 <form action="{{ backtraceUri }}" method="post">
                   {% import "include/macros.html.twig" as macro %}
-                  {{ macro.select('selectMemberGroup',allAssignedGroups,'selectMemberGroup',groupId,' class="ui-render-select2" onchange="this.form.submit()"') }}
+                  {{ macro.select('selectMemberGroup',allAssignedGroups,'selectMemberGroup',groupId,' class="ui-render-select2 form-control-sm" onchange="this.form.submit()"') }}
               </form>
               {% endif %}
             </td>

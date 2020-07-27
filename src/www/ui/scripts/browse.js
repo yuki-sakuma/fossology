@@ -31,6 +31,7 @@ var staSel = null;
 $(document).ready(function () {
   table = createBrowseTable();
   $('#insert_browsetbl_filter').append($('#browsetbl_filter'));
+  $("input[type='search']").addClass("form-control-sm");
   initPrioClick();
   table.on('draw', function () {
     initPrioClick();
@@ -45,7 +46,7 @@ $(document).ready(function () {
     });
   });
   commentModal = $('#commentModal').plainModal();
-  $(document).tooltip({'items':"img"});
+  //$(document).tooltip({'items':"img"});
 });
 
 function initPrioClick() {
