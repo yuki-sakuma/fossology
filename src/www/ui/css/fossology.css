@@ -226,6 +226,12 @@ img.deleted {
   margin-left: 3px;
   width: 11px;
 }
+
+.view-license-rc-size {
+  width:1.10rem;
+  height:1.10rem;
+}
+
 .nobreaktext {
   white-space: nowrap;
 }

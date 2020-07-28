@@ -28,6 +28,11 @@ $(document).ready(function () {
   bulkModal = $('#bulkModal').plainModal({child: textModal});
   userModal = $('#userModal').plainModal();
   clearingHistoryDataModal = $('#ClearingHistoryDataModal').plainModal();
+  $('#bulkModal').draggable({
+    stop: function(){
+      $(this).css({'width':'','height':''});
+    }
+  });
 });
 
 function openBulkModal(uploadTreeId) {

@@ -323,7 +323,7 @@ function doOnSuccess() {
 
 $(document).ready(function () {
   textModal = $('#textModal').plainModal();
-  $('#textModal').draggable({
+  $('#textModal, #bulkModal, #ClearingHistoryDataModal, #userModal').draggable({
     stop: function(){
       $(this).css({'width':'','height':''});
     }
