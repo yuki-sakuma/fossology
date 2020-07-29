@@ -176,7 +176,7 @@ class AjaxBrowse extends DefaultPlugin
 
     $itemId = Isartifact($row['ufile_mode']) ? DirGetNonArtifact($row['uploadtree_pk']) : $row['uploadtree_pk'];
 
-    $nameColumn = "<strong style='margin-left:10px;font-size:11pt;'>$fileName</strong>";
+    $nameColumn = "<strong class='btn btn-sm font-weight-bold' style='margin-left:10px;font-size:11pt;'>$fileName</strong>";
     if (IsContainer($row['ufile_mode'])) {
       $nameColumn = "<a href='$uri&upload=$uploadId&folder=$folder&item=$itemId&show=$show'>$nameColumn</a>";
     }
@@ -186,18 +186,17 @@ class AjaxBrowse extends DefaultPlugin
     }
     $Parm = "upload=$uploadId&show=$show&item=" . $row['uploadtree_pk'];
     if (Iscontainer($row['ufile_mode'])) {
-      $nameColumn .= MenuRenderer::menuToActiveSelect($menuPfile, $Parm, $uploadId);
+      $nameAction = MenuRenderer::menuToActiveSelect($menuPfile, $Parm, $uploadId);
     } else {
-      $nameColumn .= MenuRenderer::menuToActiveSelect($menuPfileNoCompare, $Parm, $uploadId);
+      $nameAction = MenuRenderer::menuToActiveSelect($menuPfileNoCompare, $Parm, $uploadId);
     }
 
     $modsUploadMulti = MenuHook::getAgentPluginNames('UploadMulti');
     if (!empty($modsUploadMulti)) {
-      $nameColumn = '<div class="form-group"><input type="checkbox" name="uploads[]" class="browse-upload-checkbox" style="width:1.10rem;height:1.10rem;" value="'.$uploadId.'"/>'.$nameColumn.'</div>';
+      $nameColumn = '<input type="checkbox" name="uploads[]" class="browse-upload-checkbox" style="width:1.10rem;height:1.10rem;" value="'.$uploadId.'"/>'.$nameColumn;
     }
 
     $dateCol = Convert2BrowserTime(substr($row['upload_ts'], 0, 19));
-    $pairIdPrio = array($uploadId, floatval($row[UploadBrowseProxy::PRIO_COLUMN]));
     if (!$this->userPerm && 4 == $row['status_fk']) {
       $currentStatus = $this->statusTypes[4];
     } else {
@@ -227,7 +226,7 @@ class AjaxBrowse extends DefaultPlugin
     }
     $this->dbManager->freeResult($res);
 
-    $output = array($nameColumn, $currentStatus, $tripleComment, implode(', ', $mainLicenses), $currentAssignee, $dateCol, $pairIdPrio);
+    $output = array($nameColumn, $nameAction, $currentStatus, $tripleComment, implode(', ', $mainLicenses), $dateCol, $currentAssignee);
     return $output;
   }
 
@@ -249,8 +248,7 @@ class AjaxBrowse extends DefaultPlugin
 
   private function createSelect($id,$options,$select='',$action='')
   {
-    $html = '<div class="form-group">';
-    $html .= "<select class='form-control-sm' name=\"$id\" id=\"$id\" $action class=\"ui-render-select2\">";
+    $html = "<select class='form-control-sm' name=\"$id\" id=\"$id\" $action class=\"ui-render-select2\">";
     foreach ($options as $key=>$disp) {
       $html .= '<option value="'.$key.'"';
       if ($key == $select) {
@@ -258,7 +256,7 @@ class AjaxBrowse extends DefaultPlugin
       }
       $html .= ">$disp</option>";
     }
-    $html .= '</select></div>';
+    $html .= '</select>';
     return $html;
   }
 

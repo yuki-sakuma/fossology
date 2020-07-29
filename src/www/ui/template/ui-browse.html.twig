@@ -13,7 +13,7 @@
 {% block content %}
   <!-- The browse Modal -->
   <div class="modal" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true" data-backdrop="false">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header">
@@ -52,7 +52,8 @@
         <thead>
          <tr>
            <th id="insert_browsetbl_filter"></th>
-           <th> 
+           <th></th>
+           <th>
              <select id="statusSelector" class="form-control-sm" onchange="filterStatus();">
                <option value="0" selected> </option>
             {% for key,disp in statusOptions %}
@@ -62,6 +63,7 @@
            </th>
            <th></th>
            <th></th>
+           <th></th>
            <th>
              <select id="assigneeSelector" class="form-control-sm" onchange="filterAssignee();">
              {% for key,disp in assigneeOptions %}
@@ -69,8 +71,6 @@
              {% endfor %}
              </select>
            </th>
-           <th></th>
-           <th></th>
          </tr>
          <tr><th></th> <th></th> <th></th> <th></th> <th></th> <th></th> <th></th></tr>
         </thead>
