@@ -25,6 +25,7 @@ var userModal;
 var removed = false;
 
 $(document).ready(function () {
+  $("input[type='search']").addClass("form-control-sm");
   bulkModal = $('#bulkModal').plainModal({child: textModal});
   userModal = $('#userModal').plainModal();
   clearingHistoryDataModal = $('#ClearingHistoryDataModal').plainModal();

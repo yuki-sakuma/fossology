@@ -437,7 +437,7 @@ class CopyrightHistogramProcessPost extends FO_Plugin
     $output['2'] = $this->getTableRowAction($hash, $uploadTreeId, $upload, $type, $activated, $rw);
     if($rw && $activated)
     {
-      $output['3'] = "<input type='checkbox' class='deleteBySelect$type' id='deleteBySelect$type$hash' value='".$upload.",".$uploadTreeId.",".$hash.",".$type."'>";
+      $output['3'] = "<input type='checkbox' class='deleteBySelect$type info-bullet view-license-rc-size' id='deleteBySelect$type$hash' value='".$upload.",".$uploadTreeId.",".$hash.",".$type."'>";
     }
     else
     {

@@ -81,13 +81,16 @@ abstract class HistogramBase extends FO_Plugin {
     $output = "<h4>Activated $typeDescriptor statements:</h4>
                <div><table border=1 width='100%' id='copyright".$type."'></table></div>
                <br/><br/>
-               <div>
-                 <span>
-                   Replace: <input type='text' id='replaceText".$type."' style='width:80%'>
-                 </span>
+               <div class='form-group'>
+                 <label class='control-label col-sm-2'>Replace :</label>
+                   <div class='col-sm-10'>
+                     <input type='text' class='form-control' id='replaceText".$type."'>
+                   </div>
                <br/><br/>
-               <a style='cursor: pointer; margin-left:10px;' id='replaceSelected".$type."' class='buttonLink'>Mark selected rows for replace</a>
-               <a style='cursor: pointer; margin-left:10px;' id='deleteSelected".$type."' class='buttonLink'>Mark selected rows for deletion</a>
+               <button style='margin-left:15px;' class='btn btn-default btn-sm' id='replaceSelected".$type."'>Mark selected rows for replace</button>
+               <button style='margin-left:15px;' class='btn btn-default btn-sm' id='deleteSelected".$type."'>Mark selected rows for deletion</button>
+               </div>
+               <div>
                <br/><br/>
                <h4>Deactivated $typeDescriptor statements:</h4>
                </div>
@@ -217,7 +220,7 @@ abstract class HistogramBase extends FO_Plugin {
       $OutBuf .= "<form name='formy' method='post'>\n";
       $OutBuf .= "<div id='msgdiv'>\n";
       $OutBuf .= _("No data available.");
-      $OutBuf .= "<input type='button' name='scheduleAgent' value='Schedule Agent'";
+      $OutBuf .= "<input type='button' class='btn btn-default btn-sm' name='scheduleAgent' value='Schedule Agent'";
       $OutBuf .= "onClick=\"Schedule_Get('" . Traceback_uri() . "?mod=schedule_agent&upload=$uploadId&agent=agent_{$this->agentName}')\">\n";
       $OutBuf .= "</input>";
       $OutBuf .= "</div> \n";
@@ -249,7 +252,7 @@ abstract class HistogramBase extends FO_Plugin {
     }
 
     $selectKey = $filter == 'nolic' ? 'nolic' : 'all';
-    $OutBuf .= "<select name='view_filter' id='view_filter' onchange='ChangeFilter(this,$uploadId, $item);'>";
+    $OutBuf .= "<select name='view_filter' class='form-control-sm' id='view_filter' onchange='ChangeFilter(this,$uploadId, $item);'>";
     foreach(array('all'=>_("Show all"), 'nolic'=> _("Show files without licenses")) as $key=>$text)
     {
       $selected = ($selectKey == $key) ? "selected" : "";
@@ -329,11 +332,11 @@ abstract class HistogramBase extends FO_Plugin {
       $cellContent = Isdir($child['ufile_mode']) ? $child['ufile_name'].'/' : $child['ufile_name'];
       if (Iscontainer($child['ufile_mode']))
       {
-        $cellContent = "<a href='$LicUri'><b>$cellContent</b></a>";
+        $cellContent = "<a class='btn btn-outline-secondary btn-sm' href='$LicUri'><b>$cellContent</b></a>";
       }
       else if (!empty($LinkUri)) //  && ($LicCount > 0))
       {
-        $cellContent = "<a href='$LinkUri'>$cellContent</a>";
+        $cellContent = "<a class='btn btn-outline-secondary btn-sm' href='$LinkUri'>$cellContent</a>";
       }
       $VF .= "<tr><td id='$child[uploadtree_pk]' align='left'>$cellContent</td><td>";
 

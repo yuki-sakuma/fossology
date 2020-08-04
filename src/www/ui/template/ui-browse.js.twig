@@ -17,8 +17,6 @@ tableColumns = [
 tableSorting = [
   [5, "desc"],
   [0, "asc"],
-  [1, "desc"],
-  [2, "desc"],
   [6, "desc"]
 ];
 
@@ -88,7 +86,7 @@ function removeMainLicense(uploadId,licenseId) {
     $.getJSON("?mod=conclude-license&do=removeMainLicense&upload=" + uploadId + "&licenseId=" + licenseId)
       .done(function (data) {
         var table = createBrowseTable();
-        table.fnDraw(false);
+        table.draw(false);
       })
       .fail(failed);
   }
