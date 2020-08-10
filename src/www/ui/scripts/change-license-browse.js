@@ -25,10 +25,9 @@ var userModal;
 var removed = false;
 
 $(document).ready(function () {
+
   $("input[type='search']").addClass("form-control-sm");
-  bulkModal = $('#bulkModal').plainModal({child: textModal});
-  userModal = $('#userModal').plainModal();
-  clearingHistoryDataModal = $('#ClearingHistoryDataModal').plainModal();
+  clearingHistoryDataModal = $('#ClearingHistoryDataModal').modal('hide');
   $('#bulkModal').draggable({
     stop: function(){
       $(this).css({'width':'','height':''});
@@ -36,37 +35,47 @@ $(document).ready(function () {
   });
 });
 
+$("#textModal").on('show.bs.modal', function (e) {
+    $("#bulkModal").modal("hide");
+});
+
+$("#textModal").on('hide.bs.modal', function (e) {
+    $("#bulkModal").modal("show");
+});
+
 function openBulkModal(uploadTreeId) {
+  bulkModal = $('#bulkModal').modal('hide');
   $('#uploadTreeId').val(uploadTreeId);
-  bulkModal.plainModal('open');
+  bulkModal.toggle();
 }
 
 function closeBulkModal() {
-  bulkModal.plainModal('close');
+  $('#bulkModal').hide();
 }
 
 function loadBulkHistoryModal() {
   refreshBulkHistory(function(data) {
-    $('#bulkHistoryModal').plainModal('open');
+    $('#bulkHistoryModal').modal('show');
   });
 }
 
 function openUserModal(uploadTreeId) {
+  userModal = $('#userModal').modal('hide');
   $('#uploadTreeId').val(uploadTreeId);
-  userModal.plainModal('open');
+  userModal.toggle();
 }
 
 function closeUserModal() {
-  userModal.plainModal('close');
+  userModal.hide();
 }
 
 function openClearingHistoryDataModal(uploadTreeId) {
   $('#uploadTreeId').val(uploadTreeId);
-  clearingHistoryDataModal.plainModal('open');
+  clearingHistoryDataModal.modal('show');
 }
 
 function closeClearingHistoryDataModal() {
-  clearingHistoryDataModal.plainModal('close');
+  clearingHistoryDataModal.modal('hide');
 }
 
 function scheduleBulkScan() {

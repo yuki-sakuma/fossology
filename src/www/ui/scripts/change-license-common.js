@@ -20,6 +20,7 @@
 var magicNumberNoLicenseFoundInt = 507;
 var magicNumberNoLicenseFound = "507";
 var noLicenseString = "No_license_found";
+var bulkModalOpened = 0;
 
 
 function jsArrayFromHtmlOptions(pListBox) {
@@ -249,7 +250,7 @@ function openTextModel(uploadTreeId, licenseId, what, type) {
       $("#licenseStdCommentDropDown-text").hide();
       $("#licenseStdCommentDropDown").next(".select2-container").hide();
     }
-    textModal.plainModal('open');
+    textModal.modal('show');
   } else {
     $("#referenceText").val($("#"+licenseId+what+type).attr('title'));
     whatCol = what;
@@ -260,13 +261,13 @@ function openTextModel(uploadTreeId, licenseId, what, type) {
       $("#licenseStdCommentDropDown-text").hide();
       $("#licenseStdCommentDropDown").next(".select2-container").hide();
     }
-    textModal.plainModal('open');
+    textModal.modal('show');
   }
   whatType = type;
 }
 
 function closeTextModal() {
-  textModal.plainModal('close');
+  textModal.modal('hide');
 }
 
 function submitTextModal(){
@@ -283,7 +284,7 @@ function submitTextModal(){
       success: doOnSuccess
     });
   } else {
-    textModal.plainModal('close');
+    textModal.modal('hide');
     $("#"+ whatLicId + whatCol +"Bulk").attr('title', $("#referenceText").val());
     referenceText = $("#referenceText").val().trim();
     if(referenceText !== null && referenceText !== '') {
@@ -315,15 +316,16 @@ function checkIfEligibleForGlobalDecision()
 }
 
 function doOnSuccess() {
-  textModal.plainModal('close');
+  textModal.modal('hide');
   $('#decTypeSet').addClass('decTypeWip');
   oTable = $('#licenseDecisionsTable').dataTable(selectedLicensesTableConfig).makeEditable(editableConfiguration);
   oTable.fnDraw(false);
 }
 
 $(document).ready(function () {
-  textModal = $('#textModal').plainModal();
-  $('#textModal, #bulkModal, #ClearingHistoryDataModal, #userModal').draggable({
+  $('[data-toggle="tooltip"]').tooltip();
+  textModal = $('#textModal').modal('hide');
+  $('#textModal, #bulkModal, #ClearingHistoryDataModal, #userModal, #bulkHistoryModal').draggable({
     stop: function(){
       $(this).css({'width':'','height':''});
     }
