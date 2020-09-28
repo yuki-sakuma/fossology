@@ -15,12 +15,43 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+#include <iostream>
 #include "ninka.hpp"
+#include "ninkawrapper.hpp"
 
 using namespace fo;
 
+void scan(const fo::File& file)
+{
+  string ninkaResult = scanFileWithNinka(0, file);
+  vector<string> ninkaLicenseNames = extractLicensesFromNinkaResult(ninkaResult);
+  vector<LicenseMatch> matches = createMatches(ninkaLicenseNames);
+  for (vector<LicenseMatch>::const_iterator it = matches.begin(); it != matches.end(); ++it)
+  {
+    const LicenseMatch& match = *it;
+    cout << (it != matches.begin() ? "," : "") << match.getLicenseName();
+  }
+}
+
+int cli(int argc, char** argv)
+{
+  for (int i = 2; i < argc; i++)
+  {
+    fo::File file(i, argv[i]);
+    cout << file.getFileName() << ";";
+    scan(file);
+    cout << ";" << endl;
+  }
+  return 0;
+}
+
 int main(int argc, char** argv)
 {
+  if (argc > 2 && strcmp("--", argv[1]) == 0)
+  {
+    return cli(argc, argv);
+  }
+
   /* before parsing argv and argc make sure */
   /* to initialize the scheduler connection */
 

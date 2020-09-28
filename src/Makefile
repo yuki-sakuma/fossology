@@ -21,6 +21,7 @@ DIRS = \
 	maintagent \
 	mimetype \
 	monk \
+	ninka \
 	nomos \
 	ojo \
 	pkgagent \

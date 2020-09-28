@@ -63,6 +63,7 @@ RUN mkdir /usr/share/man/man1 /usr/share/man/man7 \
  && DEBIAN_FRONTEND=noninteractive apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       curl \
+      git \
       lsb-release \
       sudo \
  && DEBIAN_FRONTEND=noninteractive /fossology/utils/fo-installdeps --offline --runtime -y \
@@ -78,6 +79,10 @@ RUN /fossology/install/scripts/php-conf-fix.sh --overwrite
 RUN mkdir -p /var/log/apache2/ \
  && ln -sf /proc/self/fd/1 /var/log/apache2/access.log \
  && ln -sf /proc/self/fd/1 /var/log/apache2/error.log
+
+# configure ninka
+COPY ./install/scripts/install-ninka.sh ./install/scripts/install-ninka.sh
+RUN /fossology/install/scripts/install-ninka.sh
 
 COPY ./docker-entrypoint.sh /fossology/docker-entrypoint.sh
 RUN chmod +x /fossology/docker-entrypoint.sh
