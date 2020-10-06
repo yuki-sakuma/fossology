@@ -1,0 +1,84 @@
+FROM debian:buster-slim as builder
+
+WORKDIR /fossology
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+      git \
+      lsb-release \
+      php-cli \
+      sudo \
+      dpkg-dev \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY ./utils/fo-installdeps ./utils/fo-installdeps
+COPY ./utils/utils.sh ./utils/utils.sh
+COPY ./src/copyright/mod_deps ./src/copyright/
+COPY ./src/nomos/mod_deps ./src/nomos/
+COPY ./src/ojo/mod_deps ./src/ojo/
+
+RUN mkdir -p /fossology/dependencies-for-runtime \
+ && cp -R /fossology/src /fossology/utils /fossology/dependencies-for-runtime/
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update \
+ && DEBIAN_FRONTEND=noninteractive /fossology/utils/fo-installdeps --build --offline -y \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY ./Makefile* ./
+COPY ./debian ./debian
+COPY ./install ./install
+COPY ./src ./src
+COPY ./utils ./utils
+
+RUN make clean build-lib \
+ && make -C src/nomos/agent -f Makefile.sa all \
+ && make -C src/copyright/agent copyright \
+ && make -C src/copyright/agent ecc \
+ && make -C src/copyright/agent keyword \
+ && make -C src/ninka/agent ninka \
+ && make -C src/monk/agent monk \
+ && make -C src/ojo/agent ojo
+
+RUN dpkg-shlibdeps -Orun-deps -esrc/nomos/agent/nomossa \
+                              -esrc/copyright/agent/copyright \
+                              -esrc/copyright/agent/ecc \
+                              -esrc/copyright/agent/keyword \
+                              -esrc/ninka/agent/ninka \
+                              -esrc/monk/agent/monk \
+                              -esrc/ojo/agent/ojo \
+ && sed -E -i -e 's/(shlibs:Depends=)|(\(>=?[ 0-9\:\.\~\-]*\))|(,)//g' run-deps
+
+FROM debian:buster-slim
+
+COPY --from=builder /fossology/src/nomos/agent/nomossa /usr/local/share/fossology/nomos/agent/nomos
+COPY --from=builder /fossology/src/ninka/agent/ninka /usr/local/share/fossology/ninka/agent/ninka
+COPY --from=builder /fossology/src/monk/agent/monk /usr/local/share/fossology/monk/agent/monk
+COPY --from=builder /fossology/src/ojo/agent/ojo /usr/local/share/fossology/ojo/agent/ojo
+COPY --from=builder /fossology/src/copyright/agent/copyright /usr/local/share/fossology/copyright/agent/copyright
+COPY --from=builder /fossology/src/copyright/agent/copyright.conf /usr/local/share/fossology/copyright/agent/copyright.conf
+COPY --from=builder /fossology/src/copyright/agent/ecc /usr/local/share/fossology/ecc/agent/ecc
+COPY --from=builder /fossology/src/copyright/agent/ecc.conf /usr/local/share/fossology/ecc/agent/ecc.conf
+COPY --from=builder /fossology/src/copyright/agent/keyword /usr/local/share/fossology/keyword/agent/keyword
+COPY --from=builder /fossology/src/copyright/agent/keyword.conf /usr/local/share/fossology/keyword/agent/keyword.conf
+COPY --from=builder /fossology/run-deps /opt/run-deps
+COPY --from=builder /fossology/dependencies-for-runtime /fossology
+
+WORKDIR /fossology
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+      $(cat /opt/run-deps) \
+      ca-certificates \
+      curl \
+      git \
+      jq \
+      make \
+      python3 \
+      sudo \
+ && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y \
+ && rm -rf /var/lib/apt/lists/* /opt/run-deps
+
+COPY ./install/scripts/install-ninka.sh ./install/scripts/install-ninka.sh
+RUN /fossology/install/scripts/install-ninka.sh
+
+COPY ./scripts ./scripts

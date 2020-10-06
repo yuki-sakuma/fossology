@@ -1,0 +1,17 @@
+version: '3.5'
+services:
+  sa-builder:
+    build:
+      context: .
+      dockerfile: Dockerfile-sa
+      target: builder
+    image: fossology-sa:builder
+  sa:
+    build:
+      context: .
+      dockerfile: Dockerfile-sa
+    container_name: fossology
+    image: fossology-sa
+    tty: true
+    volumes:
+      - ./scripts:/fossology/scripts
