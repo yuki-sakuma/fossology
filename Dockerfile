@@ -64,7 +64,9 @@ RUN mkdir /usr/share/man/man1 /usr/share/man/man7 \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       curl \
       git \
+      jq \
       lsb-release \
+      python3 \
       sudo \
  && DEBIAN_FRONTEND=noninteractive /fossology/utils/fo-installdeps --offline --runtime -y \
  && DEBIAN_FRONTEND=noninteractive apt-get purge -y lsb-release \

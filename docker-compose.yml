@@ -31,6 +31,7 @@ services:
       - db
     volumes:
       - repository:/srv/fossology/repository/
+      - ./scripts:/fossology/scripts
   web:
     build:
       context: .
